@@ -44,7 +44,7 @@ classdef PhoneSynth02 < audioPlugin
         end
         
         function out = process (plugin, in)
-            accX = plugin.pMobile.getRawX;
+            accX = plugin.pMobile.getAccLog;
 %             accY = plugin.pMobile.getY;
 %             accZ = plugin.pMobile.getZ;
             
@@ -52,7 +52,7 @@ classdef PhoneSynth02 < audioPlugin
             y = zeros(size(in));
             
             plugin.freq = accX * plugin.baseFreq;
-            %plugin.freq
+           % plugin.freq
             plugin.delta = plugin.freq * 2 * pi / plugin.fs;
             
 %             plugin.modFreq = accY * plugin.baseFreq;

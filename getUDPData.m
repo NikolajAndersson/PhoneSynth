@@ -1,4 +1,4 @@
-classdef getMobileData < handle
+classdef getUDPData < handle
     % Retrieve the data from your device
     
     properties
@@ -20,13 +20,8 @@ classdef getMobileData < handle
     end
     
     methods
-        function obj = getMobileData()
-            connector on nikolaj
-            obj.m = mobiledev;
-            obj.m.SampleRate = 'high'; 
-            obj.m.AccelerationSensorEnabled = 1;
-            obj.m.Logging = 1;
-            %obj.m.OrientationSensorEnabled = 1;
+        function obj = getUDPData()
+            
             obj.posX = 1;
             obj.posY = 1;
             obj.posZ = 1;
