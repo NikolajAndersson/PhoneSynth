@@ -44,35 +44,37 @@ classdef PhoneSynth02 < audioPlugin
         end
         
         function out = process (plugin, in)
-            accX = plugin.pMobile.getX;
-            accY = plugin.pMobile.getY;
-            accZ = plugin.pMobile.getZ;
+            accX = plugin.pMobile.getRawX;
+%             accY = plugin.pMobile.getY;
+%             accZ = plugin.pMobile.getZ;
             
             [m,n] = size(in);
             y = zeros(size(in));
             
             plugin.freq = accX * plugin.baseFreq;
-            plugin.freq
+            %plugin.freq
             plugin.delta = plugin.freq * 2 * pi / plugin.fs;
             
-            plugin.modFreq = accY * plugin.baseFreq;
-            plugin.modDelta = plugin.modFreq * 2 * pi / plugin.fs;
+%             plugin.modFreq = accY * plugin.baseFreq;
+%             plugin.modDelta = plugin.modFreq * 2 * pi / plugin.fs;
             
             for i = 1:m
                 y(i,:) = sin(plugin.phase); %* sin(plugin.modPhase));
-                
-                plugin.phase = plugin.phase + plugin.delta;
-                if plugin.phase > 2 * pi
-                    plugin.phase = plugin.phase - 2*pi;
-                end
-                
-                plugin.modPhase = plugin.modPhase + plugin.modDelta;
-                if plugin.modPhase > 2 * pi
-                    plugin.modPhase = plugin.modPhase - 2*pi;
-                end
+                updatePhase(plugin);
             end
-           
+            
             out = y*plugin.amplitude;
+        end
+        function updatePhase(plugin)
+            plugin.phase = plugin.phase + plugin.delta;
+            if plugin.phase > 2 * pi
+                plugin.phase = plugin.phase - 2*pi;
+            end
+            
+            plugin.modPhase = plugin.modPhase + plugin.modDelta;
+            if plugin.modPhase > 2 * pi
+                plugin.modPhase = plugin.modPhase - 2*pi;
+            end
         end
     end
     

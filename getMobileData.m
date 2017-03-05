@@ -16,13 +16,14 @@ classdef getMobileData < handle
         z = [];
     end
     properties(Constant)
-        arrayLength = 100;
+        arrayLength = 10;
     end
     
     methods
         function obj = getMobileData()
             connector on nikolaj
             obj.m = mobiledev;
+            obj.m.SampleRate = 'high'; 
             obj.m.AccelerationSensorEnabled = 1;
             obj.m.Logging = 1;
             %obj.m.OrientationSensorEnabled = 1;
@@ -33,7 +34,9 @@ classdef getMobileData < handle
             obj.y = zeros(obj.arrayLength,1);
             obj.z = zeros(obj.arrayLength,1);
         end
-        
+        function out = getRawX(obj)
+            out = abs(obj.m.Acceleration(1));
+        end
         function out = getX(obj)
             obj.x(obj.posX) = obj.m.Acceleration(1);
             
